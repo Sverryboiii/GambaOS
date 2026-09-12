@@ -1,6 +1,9 @@
-GET out
+GETF modules/io.pr
 GET add
 out ("5 + 9 ="!)
 
 add ("5"+;"9"+) -> x
 out (x)
+
+in ("hello: "!) -> y
+out (y)

@@ -1,5 +1,5 @@
 from src.gambaos.system.pyrolang import parser
-import typing
+import typing, sverpykit as spk
 
 main_code = None
 
@@ -11,6 +11,7 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
     skips = 0
 
     for count, line in enumerate(lines):
+        spk.run_frame()
         line: str = line.strip()
         if line == "":
             continue

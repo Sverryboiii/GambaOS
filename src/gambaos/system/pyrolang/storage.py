@@ -1,3 +1,4 @@
+from src.gambaos.system.GambaOS.FileManager import resource_path
 import sverpykit as spk
 
 class Boolean:
@@ -155,6 +156,7 @@ class Storage:
         self.functions = {}
 
         self.text_block: spk.TextBlock = text_block
+        self.input = None
 
     def add_variable(self, var, val):
         self.variables[var] = val
@@ -162,7 +164,8 @@ class Storage:
     def add_pr_function(self, name, start, file, parameters):
         self.functions[name] = Function(start, file, parameters)
 
-    def load_file(self, directory: str):
+    @ staticmethod
+    def load_file(directory: str):
         from src.gambaos.system.pyrolang import lexer
-        lexer.tokenize(directory)
+        lexer.tokenize(resource_path(f"system/pyrolang/{directory}"))
 storage: Storage

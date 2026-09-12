@@ -1,4 +1,5 @@
 from src.gambaos.system.pyrolang import storage
+import sverpykit as spk
 
 # All Built-in methods that are used for PyroLang.
 def _add(*values):
@@ -53,13 +54,20 @@ def _out(*values, end=True):
             storage.storage.text_block.change_text(
                 f"{storage.storage.text_block.text}{val.data} "
             )
-    storage.storage.text_block.change_text(
-        f"{storage.storage.text_block.text}\n"
-    )
+    if end:
+        storage.storage.text_block.change_text(
+            f"{storage.storage.text_block.text}\n"
+        )
 
 def _in(*values):
     _out(*values, end=False)
-    return storage.String(input(), convert=False)
+    while True:
+        spk.run_frame()
+        if not storage.storage.input:
+            continue
+        r = storage.String(storage.storage.input, convert=False)
+        storage.storage.input = None
+        return r
 
 class Builtins:
     def __init__(self):
