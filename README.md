@@ -1,2 +1,9 @@
 # GambaOS
-An OS that makes you want to eat fish!
+
+### <b>[!] Disclaimer: GambaOS is NOT na operating system! [!]</b>
+
+GambaOS is a virtual environment with an integrated programing and mark-up
+language!<br>
+
+GambaOS will eventually turn into a game, but for now we are working on
+the functionality of the foundation.
