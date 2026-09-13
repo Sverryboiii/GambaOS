@@ -13,7 +13,8 @@ def add_layers():
 
     Functions.text_box = spk.TextBlock(
         pygame.Rect(0, 0, rect[2], rect[3]),
-        ">> "
+        "GambaOS/user >> ",
+        "tiny"
     )
 
     Functions.input_bar = spk.SearchBar(

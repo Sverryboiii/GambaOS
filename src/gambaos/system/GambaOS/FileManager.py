@@ -1,8 +1,7 @@
-import os, sys
-from pathlib import Path
+import os
 
-base = Path(__file__).resolve().parent
 def resource_path(relative_path):
-    if hasattr(sys, '_MEIPASS'):
-        return os.path.join(sys._MEIPASS, f"../../{relative_path}")
-    return os.path.join(base, f"../../{relative_path}")
+    return os.path.join(os.path.join(
+    str(os.getenv("APPDATA")) if os.name == "nt"\
+        else os.path.join(os.path.expanduser("~"), ".config"), f"GambaOS-Sverryboiii/src/gambaos/{relative_path}"
+    ))

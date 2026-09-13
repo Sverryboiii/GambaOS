@@ -1,12 +1,20 @@
 from src.gambaos.system.pyrolang import execute as exe, storage
 from src.gambaos.system.GambaOS.FileManager import resource_path
-import sverpykit as spk, pygame
+import sverpykit as spk, pygame, os, shutil
 
 input_bar: spk.SearchBar
 text_box: spk.TextBlock
 
 running_program: bool = False
 program_storage: storage.Storage = storage.Storage(spk.TextBlock(pygame.Rect(0, 0, 0, 0), "out of use"))
+
+current_directory = "user"
+
+def error_message(message):
+    text_box.change_text(
+        f"{text_box.text}[Error] >> "
+        f"{message}\n"
+    )
 
 def execute(operation: str):
     global program_storage
@@ -20,10 +28,13 @@ def execute(operation: str):
         program_storage.input = operation
         text_box.change_text(f"{text_box.text}{operation}")
     elif split_operation[0] in commands:
-        if len(split_operation) > 1:
-            commands[split_operation[0]](*split_operation[1:])
-        else:
-            commands[split_operation[0]]()
+        try:
+            if len(split_operation) > 1:
+                commands[split_operation[0]](*split_operation[1:])
+            else:
+                commands[split_operation[0]]()
+        except TypeError:
+            error_message("Too little or too many arguments are given!")
     else:
         text_box.change_text(
             f"{text_box.text}[Error] >> "
@@ -31,11 +42,31 @@ def execute(operation: str):
         )
 
     text_box.change_text(
-        f"{text_box.text}\n>> "
+        f"{text_box.text}\nGambaOS/{current_directory} >> "
     )
 
 def clear_screen():
     text_box.change_text(">> ")
+
+def make_directory(directory: str):
+    os.makedirs(resource_path(os.path.join(current_directory, directory)))
+
+def make_file(directory: str):
+    with open(resource_path(os.path.join(current_directory, directory)), "w") as f:
+        f.write("")
+
+def change_directory(directory):
+    global current_directory
+    new_directory = current_directory
+    for part in directory.split("/"):
+        if part != "..":
+            new_directory = os.path.join(new_directory, part)
+            continue
+        new_directory = "/".join(new_directory.split("/")[:-1])
+    if os.path.exists(resource_path(new_directory)):
+        current_directory = new_directory
+        return
+    error_message(f"Directory {new_directory} does not exist!")
 
 def run_pyrolang_script(file: str):
     global program_storage, running_program
@@ -47,7 +78,14 @@ def run_pyrolang_script(file: str):
     input_bar.function = execute
     running_program = False
 
+def exit_terminal():
+    pass
+
 commands = {
     "cls": clear_screen,
-    "pyro": run_pyrolang_script
+    "pyro": run_pyrolang_script,
+    "mkdir": make_directory,
+    "mkfile": make_file,
+    "cd": change_directory,
+    "exit": exit_terminal
 }

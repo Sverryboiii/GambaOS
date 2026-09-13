@@ -1,4 +1,4 @@
-import pygame, sverpykit as spk, os, shutil, sys, importlib
+import pygame, sverpykit as spk, os, shutil, sys, importlib.util
 from pathlib import Path
 
 screen = spk.set_display(500, 500)
@@ -18,19 +18,32 @@ def toggle_reset():
 
 config = os.path.join(
     str(os.getenv("APPDATA")) if os.name == "nt"\
-        else os.path.join(os.path.expanduser("~"), ".config"), "GambaOS"
+        else os.path.join(os.path.expanduser("~"), ".config"), "GambaOS-Sverryboiii"
 )
 
 if not os.path.exists(config):
-    shutil.copytree(resource_path("gambaos"), config, ignore=shutil.ignore_patterns("*.pyc", "__pycache__"))
+    shutil.copytree(
+        resource_path(""),
+        os.path.join(config, "src"),
+        ignore=shutil.ignore_patterns("*.pyc", "__pycache__", "gambaos_launcher")
+    )
 
 def start_gamba_os():
     global reset
     if reset:
         shutil.rmtree(config)
-        shutil.copytree(resource_path("gambaos"), config, ignore=shutil.ignore_patterns("*.pyc", "__pycache__"))
-    sys.path.append(config)
-    importlib.import_module("system.GambaOS.main")
+        shutil.copytree(
+            resource_path(""),
+            os.path.join(config, "src"),
+            ignore=shutil.ignore_patterns("*.pyc", "__pycache__", "gambaos_launcher")
+        )
+    if config in sys.path:
+        sys.path.remove(config)
+    sys.path.insert(0, config)
+    spec = importlib.util.spec_from_file_location("appdata_GambaOS", os.path.join(config, "src/gambaos/system/GambaOS/main.py"))
+    gamba_os = importlib.util.module_from_spec(spec)
+    sys.modules["gamba_main"] = gamba_os
+    spec.loader.exec_module(gamba_os)
 
 ui = [
     spk.Button(
