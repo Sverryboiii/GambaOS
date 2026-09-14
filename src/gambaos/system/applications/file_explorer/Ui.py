@@ -11,8 +11,10 @@ def add_layers():
         Config.screen.get_height()/2
     )
 
-    window = spk.add_layer(
+    Functions.window = spk.add_layer(
         layer_type="window",
         rectangle=pygame.Rect(*rect),
         components=[]
     )
+
+    Functions.reset_file_buttons()
