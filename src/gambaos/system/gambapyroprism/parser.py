@@ -10,11 +10,13 @@ def parse_tag(tag) -> tuple[dict, bool]:
 
     split_tag = tag.split(" ")
 
-    parsed_tag["name"] = split_tag[0]
+    parsed_tag["name"] = split_tag[0][1:-1]
 
     return parsed_tag, remove
 
 def parse(text) -> list:
+
+    text = "".join(text.split("\n"))
 
     if not text.startswith("<GPP>"):
         raise GppError("File must start with '<GPP>' to initialize that it's a GPP file!")
@@ -32,7 +34,7 @@ def parse(text) -> list:
             in_tag = True
             tag = text[c:].split(">")[0] + ">"
             parsed_tag = parse_tag(tag)
-            if parsed_tag[0]["name"] == "<l>":
+            if parsed_tag[0]["name"] == "l":
                 parsed_text[-1]["tags"] = layer.copy()
                 layer = []
                 parsed_text.append({"text": "", "tags": []})
@@ -47,5 +49,3 @@ def parse(text) -> list:
         parsed_text[-1]["tags"] = layer.copy()
 
     return parsed_text
-
-print(parse("<GPP><p>Hello, world!<l><b>2nd-layer"))
