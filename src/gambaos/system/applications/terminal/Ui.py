@@ -27,7 +27,7 @@ def add_layers():
         display=Config.screen,
         function=Functions.execute
     )
-    spk.add_layer(
+    Functions.window = spk.add_layer(
         layer_type="window",
         rectangle=pygame.Rect(*rect),
         components=[

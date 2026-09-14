@@ -2,6 +2,8 @@ from src.gambaos.system.pyrolang import execute as exe, storage
 from src.gambaos.system.GambaOS.FileManager import resource_path
 import sverpykit as spk, pygame, os, shutil
 
+window: spk.Window
+
 input_bar: spk.SearchBar
 text_box: spk.TextBlock
 
@@ -92,7 +94,7 @@ def run_pyrolang_script(file: str):
     running_program = False
 
 def exit_terminal():
-    pass
+    window.close()
 
 commands = {
     "cls": clear_screen,

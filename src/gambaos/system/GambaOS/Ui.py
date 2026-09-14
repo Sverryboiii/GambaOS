@@ -58,6 +58,6 @@ start_screen = [
                 components=Runtime.get_application_buttons()
             )
         ],
-        title_bar = False
+        # title_bar = False
     )
 ]
