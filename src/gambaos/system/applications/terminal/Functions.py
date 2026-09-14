@@ -51,9 +51,15 @@ def clear_screen():
 def make_directory(directory: str):
     os.makedirs(resource_path(os.path.join(current_directory, directory)))
 
+def delete_directory(directory: str):
+    shutil.rmtree(resource_path(os.path.join(current_directory, directory)))
+
 def make_file(directory: str):
     with open(resource_path(os.path.join(current_directory, directory)), "w") as f:
         f.write("")
+
+def delete_file(directory: str):
+    os.remove(resource_path(os.path.join(current_directory, directory)))
 
 def change_directory(directory):
     global current_directory
@@ -67,6 +73,13 @@ def change_directory(directory):
         current_directory = new_directory
         return
     error_message(f"Directory {new_directory} does not exist!")
+
+def show_directory(directory=""):
+    for c, path in enumerate(os.listdir(resource_path(os.path.join(current_directory, directory)))):
+        if (c+1) % 3 == 0:
+            text_box.change_text(f"{text_box.text}{path}\n")
+        else:
+            text_box.change_text(f"{text_box.text}{path}   ")
 
 def run_pyrolang_script(file: str):
     global program_storage, running_program
@@ -86,6 +99,9 @@ commands = {
     "pyro": run_pyrolang_script,
     "mkdir": make_directory,
     "mkfile": make_file,
+    "rmdir": delete_directory,
+    "rmfile": delete_file,
+    "dir": show_directory,
     "cd": change_directory,
     "exit": exit_terminal
 }
