@@ -1,4 +1,4 @@
-from src.gambaos.system.gambapyroprism import parser
+from src.gambaos.system.gambamarkuplanguage import parser
 import sverpykit as spk, pygame
 
 fonts = {
