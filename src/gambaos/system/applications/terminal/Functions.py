@@ -13,22 +13,26 @@ program_storage: storage.Storage = storage.Storage(spk.TextBlock(pygame.Rect(0, 
 current_directory = "user"
 
 def error_message(message):
-    text_box.change_text(
-        f"{text_box.text}[Error] >> "
-        f"{message}\n"
+    text_box.add_text(
+        f"[Error] >> {message}",
+        "tiny", color=(255, 255, 255), newline=True
     )
 
 def execute(operation: str):
     global program_storage
 
-    text_box.change_text(
-        f"{text_box.text}{operation}\n"
+    text_box.add_text(
+        f"{operation}",
+        "tiny", color=(255, 255, 255), newline=True
     )
 
     split_operation = operation.split(" ")
     if running_program:
         program_storage.input = operation
-        text_box.change_text(f"{text_box.text}{operation}")
+        text_box.add_text(
+            f"{operation}",
+            "tiny", color=(255, 255, 255)
+        )
     elif split_operation[0] in commands:
         try:
             if len(split_operation) > 1:
@@ -38,17 +42,19 @@ def execute(operation: str):
         except TypeError:
             error_message("Too little or too many arguments are given!")
     else:
-        text_box.change_text(
-            f"{text_box.text}[Error] >> "
-            f"Command '{split_operation[0]}' not found!\n"
+        text_box.add_text(
+            f"[Error] >> Command '{split_operation[0]}' not found!",
+            "tiny", color=(255, 255, 255), newline=True
         )
 
-    text_box.change_text(
-        f"{text_box.text}\nGambaOS/{current_directory} >> "
+    text_box.add_text(
+        f"GambaOS/{current_directory} >> ",
+        "tiny", color=(255, 255, 255), newline=False
     )
 
 def clear_screen():
-    text_box.change_text(">> ")
+    text_box.text = ""
+    text_box.text_surfs = []
 
 def make_directory(directory: str):
     os.makedirs(resource_path(os.path.join(current_directory, directory)))
@@ -79,9 +85,15 @@ def change_directory(directory):
 def show_directory(directory=""):
     for c, path in enumerate(os.listdir(resource_path(os.path.join(current_directory, directory)))):
         if (c+1) % 3 == 0:
-            text_box.change_text(f"{text_box.text}{path}\n")
+            text_box.add_text(
+                f"{text_box.text}{path}\n",
+                "tiny", color=(255, 255, 255), newline=True
+            )
         else:
-            text_box.change_text(f"{text_box.text}{path}   ")
+            text_box.add_text(
+                f"{text_box.text}{path}   ",
+                "tiny", color=(255, 255, 255), newline=False
+            )
 
 def run_pyrolang_script(file: str):
     global program_storage, running_program
@@ -92,6 +104,9 @@ def run_pyrolang_script(file: str):
     exe.execute(resource_path(f"user/{file}"))
     input_bar.function = execute
     running_program = False
+
+def hyperlink(text, *action):
+    text_box.add_text(text, "tiny", (255, 255, 255), (execute, action), newline=True)
 
 def exit_terminal():
     window.close()
@@ -105,5 +120,6 @@ commands = {
     "rmfile": delete_file,
     "dir": show_directory,
     "cd": change_directory,
+    "hyperlink": hyperlink,
     "exit": exit_terminal
 }
