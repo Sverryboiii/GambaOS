@@ -29,7 +29,8 @@ def add_layers():
                     0, 0, rect[2], searchbar_height
                 ),
                 display=Config.screen,
-                function=Functions.load_page
+                function=Functions.load_page,
+                color=(100, 100, 100)
             ),
             Functions.text_box,
             *widgets

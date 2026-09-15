@@ -44,11 +44,12 @@ def load_index(server: str):
         text_box.change_text(f"Error: Page '{server.split('/')[-1]}' not found!")
         return
     with open(f"{server}/index.gpp", "r") as f:
-        run_gpp(f.read(), text_box)
+        run_gpp(f.read(), text_box, load_page)
 
 def load_page(web_address: str):
     window.components = [component for component in window.components if not isinstance(component, spk.Button)]
-    text_box.change_text("")
+    text_box.text_surfs = []
+    text_box.text = ""
 
     server = FileManager.project_level_path(f"external_servers/{web_address}")
 
