@@ -28,6 +28,8 @@ def parse(code):
 
     for line in code.split(";"):
         # Every line states what something could do with a "=" mark.
+        if line.strip() == "":
+            continue
 
         split_line = line.split("=")
 
@@ -36,9 +38,9 @@ def parse(code):
 
         if "color" in obj:
             if val.startswith("#"):
-                r = parse_hex("#" + val[1:2])
-                g = parse_hex("#" + val[3:4])
-                b = parse_hex("#" + val[5:6])
+                r = parse_hex("#" + val[1:3])
+                g = parse_hex("#" + val[3:5])
+                b = parse_hex("#" + val[5:7])
                 val = (r, g, b)
             else:
                 pass

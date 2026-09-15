@@ -8,9 +8,20 @@ def parse_tag(tag) -> tuple[dict, bool]:
     remove: bool = tag[1] == "/"
     if remove: tag = tag[1:]
 
-    split_tag = tag.split(" ")
+    new_tag = tag[1:-1]
+    if not ":" in new_tag:
+        parsed_tag["name"] = new_tag
+        return parsed_tag, remove
 
-    parsed_tag["name"] = split_tag[0][1:-1]
+    tag_name = new_tag.split(":")[0]
+    unparsed_parameters = ":".join(new_tag.split(":")[1:])
+
+    parsed_tag["name"] = tag_name
+
+    for param in unparsed_parameters.split(";"):
+        var = param.split("=")[0].strip()
+        val = param.split("=")[1].strip()
+        parsed_tag[var] = val
 
     return parsed_tag, remove
 

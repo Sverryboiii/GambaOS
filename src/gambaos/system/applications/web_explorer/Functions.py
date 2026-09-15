@@ -1,5 +1,6 @@
 from src.gambaos.system.GambaOS import FileManager, Config
 from src.gambaos.system.GambaOS.integrated.gml.runtime import execute as run_gpp
+from src.gambaos.system.applications.web_explorer import Config as WebConfig
 import sverpykit as spk, os, pygame
 
 window: spk.Window
@@ -44,10 +45,11 @@ def load_index(server: str):
         text_box.change_text(f"Error: Page '{server.split('/')[-1]}' not found!")
         return
     with open(f"{server}/index.gpp", "r") as f:
-        run_gpp(f.read(), text_box, load_page)
+        run_gpp(f.read(), text_box, window, load_page, server)
 
 def load_page(web_address: str):
     window.components = [component for component in window.components if not isinstance(component, spk.Button)]
+    window.color = WebConfig.window_color
     text_box.text_surfs = []
     text_box.text = ""
 

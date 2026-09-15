@@ -1,5 +1,6 @@
 from src.gambaos.system.GambaOS.integrated.gml import parser
-import sverpykit as spk
+from src.gambaos.system.GambaOS.integrated.gss import runtime as gss_runtime
+import sverpykit as spk, os
 
 fonts = {
     "p": ("arial", 20, False, False),
@@ -15,10 +16,9 @@ fonts = {
 for font_name, font in fonts.items():
     spk.set_font(f"GPP_{font_name}", *font)
 
-def execute(code, text_box: spk.TextBlock, link_executor):
+def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, path: str):
 
     parsed_code = parser.parse(code)
-    print(parsed_code)
 
     for token in parsed_code:
         text = token["text"]
@@ -39,5 +39,15 @@ def execute(code, text_box: spk.TextBlock, link_executor):
         hyperlink = None
         if "link" in names:
             hyperlink = (link_executor, [text])
+
+        for tag in tags:
+            if tag["name"] == "style":
+                directory = tag.get("dir", "")
+                full_path = os.path.join(path, directory)
+                if not directory or not os.path.exists(full_path):
+                    raise ValueError("No path given or path doesn't exist!")
+                with open(full_path, "r") as f:
+                    code = f.read()
+                gss_runtime.execute(code, window)
 
         text_box.add_text(f"{text}", f"GPP_{name}", (255, 255, 255), hyperlink=hyperlink, newline="nl" in names)
