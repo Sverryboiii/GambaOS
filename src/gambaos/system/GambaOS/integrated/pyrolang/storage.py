@@ -141,7 +141,7 @@ class Function:
         self.scope = {}
 
     def run(self, *arguments):
-        from src.gambaos.system.pyrolang import lexer
+        from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
         if len(self.parameters) != len(arguments):
             raise TypeError(f"This function accepts '{len(self.parameters)}', but you gave '{len(arguments)}'.")
         for count, parameter in enumerate(self.parameters):
@@ -166,6 +166,6 @@ class Storage:
 
     @ staticmethod
     def load_file(directory: str):
-        from src.gambaos.system.pyrolang import lexer
+        from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
         lexer.tokenize(resource_path(f"system/pyrolang/{directory}"))
 storage: Storage

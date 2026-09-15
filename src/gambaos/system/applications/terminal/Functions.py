@@ -1,4 +1,4 @@
-from src.gambaos.system.pyrolang import execute as exe, storage
+from src.gambaos.system.GambaOS.integrated.pyrolang import execute as exe, storage
 from src.gambaos.system.GambaOS.FileManager import resource_path
 import sverpykit as spk, pygame, os, shutil
 

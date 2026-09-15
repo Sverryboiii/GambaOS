@@ -1,5 +1,5 @@
 from src.gambaos.system.GambaOS import FileManager, Config
-from src.gambaos.system.gambamarkuplanguage.runtime import execute as run_gpp
+from src.gambaos.system.GambaOS.integrated.gambamarkuplanguage.runtime import execute as run_gpp
 import sverpykit as spk, os, pygame
 
 window: spk.Window

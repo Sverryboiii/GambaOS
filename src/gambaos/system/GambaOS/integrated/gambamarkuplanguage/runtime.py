@@ -1,5 +1,5 @@
-from src.gambaos.system.gambamarkuplanguage import parser
-import sverpykit as spk, pygame
+from src.gambaos.system.GambaOS.integrated.gambamarkuplanguage import parser
+import sverpykit as spk
 
 fonts = {
     "p": ("arial", 20, False, False),

@@ -1,4 +1,4 @@
-from src.gambaos.system.pyrolang import Builtins, runtime, storage
+from src.gambaos.system.GambaOS.integrated.pyrolang import runtime, storage, Builtins
 
 number_operations = "<>-+*/"
 operations = "<>-+*/="
@@ -43,11 +43,11 @@ def parse_expression(expression: str, function: storage.Function) -> bool:
         next_value = parse_value(token[c+1], function)
 
         if key in number_operations and not (
-            isinstance(last_value, storage.Integer) or
-            isinstance(last_value, storage.Float)
+                isinstance(last_value, storage.Integer) or
+                isinstance(last_value, storage.Float)
         ) and not (
-            isinstance(next_value, storage.Integer) or
-            isinstance(next_value, storage.Float)
+                isinstance(next_value, storage.Integer) or
+                isinstance(next_value, storage.Float)
         ):
             raise TypeError(f"Invalid data type(s) for operator '{key}'.")
 

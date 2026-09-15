@@ -1,4 +1,4 @@
-from src.gambaos.system.pyrolang import parser
+from src.gambaos.system.GambaOS.integrated.pyrolang import parser
 import typing, sverpykit as spk
 
 main_code = None

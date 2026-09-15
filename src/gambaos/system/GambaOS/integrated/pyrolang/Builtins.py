@@ -1,4 +1,4 @@
-from src.gambaos.system.pyrolang import storage
+from src.gambaos.system.GambaOS.integrated.pyrolang import storage
 import sverpykit as spk
 
 # All Built-in methods that are used for PyroLang.
