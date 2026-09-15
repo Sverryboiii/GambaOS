@@ -1,4 +1,4 @@
-from src.gambaos.system.GambaOS.integrated.gambamarkuplanguage import parser
+from src.gambaos.system.GambaOS.integrated.gml import parser
 import sverpykit as spk
 
 fonts = {
