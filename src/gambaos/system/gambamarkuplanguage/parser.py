@@ -18,8 +18,8 @@ def parse(text) -> list:
 
     text = "".join(text.split("\n"))
 
-    if not text.startswith("<GPP>"):
-        raise GppError("File must start with '<GPP>' to initialize that it's a GPP file!")
+    if not text.startswith("<GML>"):
+        raise GppError("File must start with '<GML>' to initialize that it's a GPP file!")
     text = text[5:]
 
     parsed_text = [{"text": "", "tags": []}]
