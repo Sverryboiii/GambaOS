@@ -1,4 +1,4 @@
-from src.gambaos.system.applications.web_explorer import Functions
+from src.gambaos.system.applications.web_explorer import Functions, Config as WebConfig
 from src.gambaos.system.GambaOS import Config
 import sverpykit as spk, pygame
 
@@ -34,5 +34,6 @@ def add_layers():
             ),
             Functions.text_box,
             *widgets
-        ]
+        ],
+        color=WebConfig.window_color
     )
