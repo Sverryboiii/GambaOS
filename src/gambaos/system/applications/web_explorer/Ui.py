@@ -18,17 +18,20 @@ def add_layers():
         ""
     )
 
+    widgets = Functions.get_widgets()
+
     Functions.window = spk.add_layer(
         "window",
         rectangle=pygame.Rect(*rect),
         components=[
             spk.SearchBar(
                 rect=pygame.Rect(
-                    0, 0, rect[0], searchbar_height
+                    0, 0, rect[2], searchbar_height
                 ),
                 display=Config.screen,
                 function=Functions.load_page
             ),
-            Functions.text_box
+            Functions.text_box,
+            *widgets
         ]
     )
