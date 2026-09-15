@@ -15,7 +15,7 @@ fonts = {
 for font_name, font in fonts.items():
     spk.set_font(f"GPP_{font_name}", *font)
 
-def execute(code, text_box: spk.TextBlock):
+def execute(code, text_box: spk.TextBlock, link_executor):
 
     parsed_code = parser.parse(code)
     print(parsed_code)
@@ -36,4 +36,8 @@ def execute(code, text_box: spk.TextBlock):
         if "i" in names:
             name += "i"
 
-        text_box.add_text(f"{text}", f"GPP_{name}", (255, 255, 255))
+        hyperlink = None
+        if "link" in names:
+            hyperlink = (link_executor, [text])
+
+        text_box.add_text(f"{text}", f"GPP_{name}", (255, 255, 255), hyperlink=hyperlink, newline="nl" in names)
