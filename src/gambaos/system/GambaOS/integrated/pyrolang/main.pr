@@ -1,6 +1,5 @@
 GETF modules/math.pr
 GETF modules/io.pr
-// GETF external.pr
 
 func say [text] {
     out (text)
