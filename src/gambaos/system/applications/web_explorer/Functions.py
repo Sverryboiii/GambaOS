@@ -52,7 +52,44 @@ def load_page(web_address: str):
     window.color = WebConfig.window_color
     text_box.text_surfs = []
     text_box.text = ""
+    if web_address == "":
+        window.components = base_components
+        text_box.add_text(
+            "Welcome to the GambaOS web explorer",
+            "default",
+            (0, 0, 0)
+        )
+        return
 
     server = FileManager.project_level_path(f"external_servers/{web_address}")
 
     load_index(server)
+
+rect = (
+    Config.screen.get_width() / 2 - Config.screen.get_width() / 4,
+    Config.screen.get_height() / 2 - Config.screen.get_height() / 4,
+    Config.screen.get_width() / 2,
+    Config.screen.get_height() / 2
+)
+
+searchbar_height = 30
+
+text_box = spk.TextBlock(
+    pygame.Rect(0, searchbar_height, rect[2], rect[3] - searchbar_height),
+    ""
+)
+
+widgets = get_widgets()
+
+base_components = [
+    spk.SearchBar(
+        rect=pygame.Rect(
+            0, 0, rect[2], searchbar_height
+        ),
+        display=Config.screen,
+        function=load_page,
+        color=(100, 100, 100)
+    ),
+    text_box,
+    *widgets
+]
