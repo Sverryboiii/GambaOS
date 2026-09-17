@@ -20,6 +20,7 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
 
     parsed_code = parser.parse(code)
 
+    sheet = {}
     for token in parsed_code:
         text = token["text"]
         tags = token["tags"]
@@ -48,6 +49,13 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
                     raise ValueError("No path given or path doesn't exist!")
                 with open(full_path, "r") as f:
                     code = f.read()
-                gss_runtime.execute(code, window)
+                sheet = gss_runtime.execute(code, window)
 
-        text_box.add_text(f"{text}", f"GPP_{name}", (255, 255, 255), hyperlink=hyperlink, newline="nl" in names)
+        text_color: tuple[int, int, int] | None = sheet.get("text-color", None)
+        text_box.add_text(
+            f"{text}",
+            f"GPP_{name}",
+            text_color if text_color else (255, 255, 255),
+            hyperlink=hyperlink,
+            newline="nl" in names
+        )

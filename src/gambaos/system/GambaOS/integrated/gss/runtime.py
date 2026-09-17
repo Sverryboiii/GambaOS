@@ -7,3 +7,5 @@ def execute(code, window: spk.Window):
 
     if parsed_code.get("background-color", False):
         window.color = parsed_code["background-color"]
+
+    return parsed_code
