@@ -1,0 +1,7 @@
+PyroLang:
+Make loops (for and while)
+Make a module system
+
+
+-!- HIGH PRIORITY -!-:
+ -

@@ -1,0 +1,1 @@
+GambaPyroPrism (GPP) is a simular language as HTML. It's used for the frontend of GambaOS "websites".

@@ -1,0 +1,47 @@
+GETF modules/math.pr
+GETF modules/io.pr
+
+func say [text] {
+    out (text)
+}
+say ("Hello"!)
+
+return
+
+min ("2"+;"1.9"-;"5.1"-) -> x
+out (x)
+
+add ("1"+;"2.0"-;"3.5"-) -> added
+out (added)
+sub ("60"+;"5"+;"40.78"-) -> subtracted
+out (subtracted)
+mult ("4"+;"5"+;"1.5"-) -> multiplied
+out (multiplied)
+div ("4"+;"2"+;"2"+) -> divided
+out (divided)
+
+avg ("1"+;"4"+;"2"+) -> average_number
+out (average_number)
+
+func test {
+    return "Pancake"!
+}
+test () -> pancake
+add ("1"+;"2"+) -> a
+out (a)
+out (pancake)
+
+out ("Should run!"!)
+func myfunc {
+    out ("Should run only if the user says Hi!"!)
+    return "Returning values works!"!
+    out ("Should never run"!)
+}
+out ("Should run again!"!)
+
+in ("Parrot: "!) -> parrot
+out (parrot)
+if [parrot="Hi"!] _myfunc () -> test_
+out (test)
+
+out ("End of script!"!)

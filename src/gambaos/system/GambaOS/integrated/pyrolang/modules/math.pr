@@ -1,0 +1,7 @@
+GET add
+GET sub
+GET mult
+GET div
+GET avg
+GET min
+GET max

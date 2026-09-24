@@ -1,0 +1,5 @@
+out ("Hello from an external script!"!)
+
+func say_hi {
+    out ("Hi!"!)
+}
