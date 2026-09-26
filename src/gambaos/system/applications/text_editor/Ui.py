@@ -11,8 +11,13 @@ def add_layers():
             Config.screen.get_height()/2
     )
 
-    spk.add_layer(
+    Functions.text_box = spk.TextBlock(
+        pygame.Rect(0, 0, rect[2], rect[3]),
+        ""
+    )
+
+    Functions.window = spk.add_layer(
         "window",
         pygame.Rect(*rect),
-        components=[]
+        components=[Functions.text_box]
     )

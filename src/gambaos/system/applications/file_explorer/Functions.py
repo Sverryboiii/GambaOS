@@ -1,4 +1,4 @@
-from src.gambaos.system.GambaOS import FileManager, Config
+from src.gambaos.system.GambaOS import FileManager, Config, Runtime
 import os, sverpykit as spk, pygame
 
 window: spk.Window
@@ -6,6 +6,11 @@ window: spk.Window
 current_directory = "user"
 
 def change_directory(directory: str):
+
+    if "." in directory and not ".." in directory:
+        open_file(directory)
+        return
+
     global current_directory
     if directory == "..":
         current_directory = "/".join(current_directory.split("/")[:-1])
@@ -13,6 +18,18 @@ def change_directory(directory: str):
         current_directory = current_directory + "/" + directory
 
     reset_file_buttons()
+
+def open_file(file: str) -> None:
+    global current_directory
+
+    if not file.endswith((".pr", ".txt")):
+        return
+
+    applications_path = FileManager.resource_path("system/applications")
+    if not "text_editor" in os.listdir(applications_path):
+        return
+
+    Runtime.launch_application("text_editor", "open_file", file)
 
 def reset_file_buttons():
     files: list = get_files(current_directory)

@@ -1,9 +1,14 @@
 from src.gambaos.system.GambaOS import FileManager, Config
 import pygame, sverpykit as spk, os, importlib
+from typing import Callable
 
-def launch_application(application_path: str):
+def launch_application(application_path: str, run_function: str | None = None, *function_args):
     module = importlib.import_module(f"src/gambaos/system/applications/{application_path}/main".replace("/", "."))
     module.main()
+    if not run_function:
+        return
+    functions = importlib.import_module(f"src/gambaos/system/applications/{application_path}/Functions".replace("/", "."))
+    getattr(functions, run_function)(*function_args)
 
 def get_application_buttons() -> list[spk.Button]:
     application_paths = os.listdir(FileManager.resource_path("system/applications"))
