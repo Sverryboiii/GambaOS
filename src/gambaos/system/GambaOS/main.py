@@ -1,5 +1,5 @@
 import pygame, sverpykit as spk
-import src.gambaos.system.GambaOS.Ui as Ui
+from src.gambaos.system.GambaOS import Ui, Config
 pygame.display.set_caption("GambaOS")
 
 spk.set_font()
@@ -12,7 +12,11 @@ def frame():
     spk.draw_surface(welcome_text, (0, 0))
     [part.update() for part in ui]
 
+def tick():
+    [method() for method in Config.tick_functions]
+
 spk.max_rate(60, 60)
 
 spk.set_frame_method(frame)
+spk.set_tick_method(tick)
 spk.start()
