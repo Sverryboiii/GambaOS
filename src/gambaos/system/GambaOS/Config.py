@@ -16,3 +16,4 @@ screen = spk.set_display(primary_monitor.width, primary_monitor.height, pygame.F
 font = spk.set_font()
 
 tick_functions: list[Callable] = []
+frame_functions: list[Callable] = []

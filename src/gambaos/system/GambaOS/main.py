@@ -11,6 +11,7 @@ welcome_text = spk.render_text("Welcome To GambaOS!!!")
 def frame():
     spk.draw_surface(welcome_text, (0, 0))
     [part.update() for part in ui]
+    [method() for method in Config.frame_functions]
 
 def tick():
     [method() for method in Config.tick_functions]
