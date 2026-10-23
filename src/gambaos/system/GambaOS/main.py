@@ -1,3 +1,4 @@
+print("Starting GambaOS!")
 import pygame, sverpykit as spk
 from src.gambaos.system.GambaOS import Ui, Config
 pygame.display.set_caption("GambaOS")

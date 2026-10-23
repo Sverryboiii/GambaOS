@@ -167,5 +167,5 @@ class Storage:
     @ staticmethod
     def load_file(directory: str):
         from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
-        lexer.tokenize(resource_path(f"system/pyrolang/{directory}"))
+        lexer.tokenize(resource_path(f"system/GambaOS/integrated/pyrolang/{directory}"))
 storage: Storage

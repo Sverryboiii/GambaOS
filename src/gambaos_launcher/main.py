@@ -31,7 +31,7 @@ if not os.path.exists(config):
 def start_gamba_os():
     global reset
     if reset:
-        shutil.rmtree(config)
+        shutil.rmtree(os.path.join(config, "src"))
         shutil.copytree(
             resource_path(""),
             os.path.join(config, "src"),

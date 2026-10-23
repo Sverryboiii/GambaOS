@@ -35,7 +35,7 @@ start_screen = [
                 surface=spk.render_text("SHUT DOWN"),
                 display=Config.screen,
                 rounding=start_screen_button_rounding,
-                function=spk.quit_game
+                function=Runtime.quit_gambaos
             ),
             spk.Button(
                 rect=pygame.Rect(

@@ -21,3 +21,33 @@ def add_layers():
         pygame.Rect(*rect),
         components=[Functions.text_box]
     )
+    Functions.window.close = Functions.close
+
+    Functions.window.operational_buttons = [
+        spk.Button(
+            rect=pygame.Rect(
+                Functions.window.rect.x + Functions.window.rect.w - Functions.window.title_bar_rect.h * 2,
+                Functions.window.rect.y - Functions.window.title_bar_rect.h,
+                Functions.window.title_bar_rect.h,
+                Functions.window.title_bar_rect.h
+            ),
+            button_color=(50, 50, 50),
+            surface=spk.render_text("-"),
+            display=Config.screen,
+            rounding=int(Functions.window.title_bar_rect.h / 3),
+            function=Functions.window.minimize
+        ),
+        spk.Button(
+            rect=pygame.Rect(
+                Functions.window.rect.x + Functions.window.rect.w - Functions.window.title_bar_rect.h,
+                Functions.window.rect.y - Functions.window.title_bar_rect.h,
+                Functions.window.title_bar_rect.h,
+                Functions.window.title_bar_rect.h
+            ),
+            button_color=(50, 50, 50),
+            surface=spk.render_text("x"),
+            display=Config.screen,
+            rounding=int(Functions.window.title_bar_rect.h / 3),
+            function=Functions.window.close
+        )
+    ]
