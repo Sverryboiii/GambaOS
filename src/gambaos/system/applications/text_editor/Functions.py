@@ -11,6 +11,39 @@ def close():
     Config.tick_functions.remove(tick)
     window.owner.remove(window)
 
+def init_close():
+
+    window.close = close
+
+    window.operational_buttons = [
+        spk.Button(
+            rect=pygame.Rect(
+                window.rect.x + window.rect.w - window.title_bar_rect.h * 2,
+                window.rect.y - window.title_bar_rect.h,
+                window.title_bar_rect.h,
+                window.title_bar_rect.h
+            ),
+            button_color=(50, 50, 50),
+            surface=spk.render_text("-"),
+            display=Config.screen,
+            rounding=int(window.title_bar_rect.h / 3),
+            function=window.minimize
+        ),
+        spk.Button(
+            rect=pygame.Rect(
+                window.rect.x + window.rect.w - window.title_bar_rect.h,
+                window.rect.y - window.title_bar_rect.h,
+                window.title_bar_rect.h,
+                window.title_bar_rect.h
+            ),
+            button_color=(50, 50, 50),
+            surface=spk.render_text("x"),
+            display=Config.screen,
+            rounding=int(window.title_bar_rect.h / 3),
+            function=window.close
+        )
+    ]
+
 def tick():
 
     if spk.Runtime.ui_layers[-1] != window:
@@ -56,3 +89,5 @@ def open_file(file_path):
     for line in file_data.split("\n"):
         text_box.add_text(line, "tiny", (25, 25, 25), newline=True)
     Config.tick_functions.append(tick)
+
+    init_close()

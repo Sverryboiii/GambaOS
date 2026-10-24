@@ -5,6 +5,6 @@ import os
 def main():
     cookies_path = FileManager.resource_path("system/applications/web_explorer/cookies.json")
     if not os.path.exists(cookies_path):
-        FileManager.json_write(cookies_path, {"widgets": {"GambaOS Info": "gww.gamba_info.gam"}})
+        FileManager.json_write(cookies_path, {"widgets": {"GambaOS Info": "gamba_info"}})
 
     Ui.add_layers()

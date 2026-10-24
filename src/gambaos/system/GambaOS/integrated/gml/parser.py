@@ -1,6 +1,6 @@
 
-class GppError(Exception):
-    """This is an error for GambaPyroPrism."""
+class GMLError(Exception):
+    """This is an error for GambaMarkupLanguage."""
 
 def parse_tag(tag) -> tuple[dict, bool]:
 
@@ -30,7 +30,7 @@ def parse(text) -> list:
     text = "".join(text.split("\n"))
 
     if not text.startswith("<GML>"):
-        raise GppError("File must start with '<GML>' to initialize that it's a GPP file!")
+        raise GMLError("File must start with '<GML>' to initialize that it's a GPP file!")
     text = text[5:]
 
     parsed_text = [{"text": "", "tags": []}]

@@ -1,5 +1,6 @@
 from src.gambaos.system.GambaOS import FileManager, Config
-from src.gambaos.system.GambaOS.integrated.gml.runtime import execute as run_gpp
+from src.gambaos.system.GambaOS.integrated.gml.runtime import execute as run_gml
+from src.gambaos.system.GambaOS.integrated.pyrolang import execute as run_pyro, storage as pyro_storage
 from src.gambaos.system.applications.web_explorer import Config as WebConfig
 import sverpykit as spk, os, pygame
 
@@ -41,11 +42,29 @@ def get_widgets():
     return widgets
 
 def load_index(server: str):
-    if not os.path.exists(server):
-        text_box.change_text(f"Error: Page '{server.split('/')[-1]}' not found!")
+
+    address = "/".join(server.split("/")[:-1]) if "code='" in server else server
+    print(server, address)
+    if not os.path.exists(address):
+        text_box.change_text(f"Error: Page '{address.split('/')[-1]}' not found!")
         return
-    with open(f"{server}/index.gpp", "r") as f:
-        run_gpp(f.read(), text_box, window, load_page, server)
+
+    if server.split("/")[-2].endswith(".pr"):
+        module = "/".join(
+            server.split("/")[server.split("/").index("GambaOS-Sverryboiii")+2:-1]
+        )
+        pyro_storage.storage = pyro_storage.Storage(text_box)
+        pyro_storage.storage.customs["window"] = window
+        pyro_storage.storage.customs["link_executor"] = load_page
+        pyro_storage.storage.customs["address"] = "/".join(address.split("/")[:address.split("/").index("GambaOS-Sverryboiii")+4])
+        print("/".join(address.split("/")[:address.index("GambaOS-Sverryboiii")+1]))
+        run_pyro.execute(FileManager.project_level_path(module))
+        return
+
+    with open(f"{address}/index.gml", "r") as f:
+        payload = run_gml(f.read(), text_box, window, load_page, address)
+    if len(payload) > 0:
+        pass
 
 def load_page(web_address: str):
     window.components = [component for component in window.components if not isinstance(component, spk.Button)]

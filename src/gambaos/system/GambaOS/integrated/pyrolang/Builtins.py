@@ -1,5 +1,8 @@
 from src.gambaos.system.GambaOS.integrated.pyrolang import storage
-import sverpykit as spk
+from src.gambaos.system.GambaOS.integrated.gml import runtime as run_gml
+from src.gambaos.system.GambaOS import FileManager
+import sverpykit as spk, time
+from datetime import datetime
 
 # All Built-in methods that are used for PyroLang.
 def _add(*values):
@@ -48,26 +51,69 @@ def is_printable_value(value):
         or isinstance(value, storage.Float)\
         or isinstance(value, storage.Boolean)
 
-def _out(*values, end=True):
-    for val in values:
+def _out(*values, newline=True):
+    for c, val in enumerate(values):
         if is_printable_value(val):
-            storage.storage.text_block.change_text(
-                f"{storage.storage.text_block.text}{val.data} "
+            storage.storage.text_block.add_text(
+                text=f"{val.data}",
+                font=storage.storage.text_block.font,
+                color=spk.Config.BEIGE,
+                newline=newline and c+1 == len(values)
             )
-    if end:
-        storage.storage.text_block.change_text(
-            f"{storage.storage.text_block.text}\n"
-        )
 
 def _in(*values):
-    _out(*values, end=False)
+    _out(*values, newline=False)
+    r = storage.String("", convert=False)
     while True:
         spk.run_frame()
         if not storage.storage.input:
             continue
         r = storage.String(storage.storage.input, convert=False)
         storage.storage.input = None
-        return r
+        break
+    return r
+
+def _time(format_=storage.String("%t", convert=False)):
+    """
+    :param format_:
+    %t = time.time() (seconds since the Unix Epoch)
+    %Y = Time in years.
+    %M = Time in month of the year (numeric).
+    %D = Time in day of the month.
+    %f = Time displayed with all needed information.
+    :return:
+    """
+
+    format_ = format_.data
+
+    # Parse format
+    for c, char in enumerate(format_):
+        if char != "%":
+            continue
+
+        char = format_[c+1]
+
+        if char == "t":
+            return storage.Float(time.time())
+        if char == "M":
+            format_ = format_[:c+1] + "m" + format_[c+2:]
+        if char == "D":
+            format_ = format_[:c+1] + "d" + format_[c+2:]
+        if char == "f":
+            format_ = format_[:c+1] + "c" + format_[c+2:]
+
+    return storage.String(datetime.now().strftime(format_), convert=False)
+
+def _gml(path):
+    with open(FileManager.project_level_path(f"external_servers/{path.data}"), "r") as f:
+        data = f.read()
+    run_gml.execute(
+        data,
+        storage.storage.text_block,
+        storage.storage.customs["window"],
+        storage.storage.customs["link_executor"],
+        storage.storage.customs["address"]
+    )
 
 class Builtins:
     def __init__(self):
@@ -81,7 +127,9 @@ class Builtins:
             "mult": _multiply,
             "div": _divide,
             "out": _out,
-            "in": _in
+            "in": _in,
+            "time": _time,
+            "gml": _gml
         }
 
     def load_builtin(self, name):

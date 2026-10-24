@@ -155,6 +155,8 @@ class Storage:
         self.variables = {}
         self.functions = {}
 
+        self.customs = {}
+
         self.text_block: spk.TextBlock = text_block
         self.input = None
 

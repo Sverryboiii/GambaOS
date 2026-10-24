@@ -1,0 +1,10 @@
+GETF modules/io.pr
+GETF modules/sys.pr
+GET add
+
+time () -> t
+out ("Time in seconds: "!;t)
+time ("%Y/%M/%D"!) -> t2
+out ("Humanly readable: "!;t2)
+time ("%f"!) -> t3
+out ("All data needed: "!;t3)

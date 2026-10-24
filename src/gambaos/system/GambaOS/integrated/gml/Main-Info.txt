@@ -1,1 +1,6 @@
-GambaPyroPrism (GPP) is a simular language as HTML. It's used for the frontend of GambaOS "websites".
+GambaMarkupLanguage (GML) is a simular language as HTML. It's used for the frontend of GambaOS "websites".
+For the backend of the websites pyrolang is used.
+
+Feel free to make your own websites, maybe someone made a version of GambaOS that does accept servers!
+
+(Maybe I will give you the option to host a GambaOS website on your device, but that will be a long, long time from now...)

@@ -1,5 +1,6 @@
 {
   "widgets": {
-    "GambaOS Info": "gww.gamba_info.gam"
+    "GambaOS Info": "gamba_info",
+    "Bank": "gamba_bank/prsrc/transaction.pr/code=''"
   }
 }

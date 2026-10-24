@@ -1,0 +1,3 @@
+GETF modules/webpr.pr
+
+gml ("gamba_bank/login.gml"!)

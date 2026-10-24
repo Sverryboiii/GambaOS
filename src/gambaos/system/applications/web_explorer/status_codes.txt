@@ -1,0 +1,4 @@
+0: Run complete
+1: Something bad happened
+2: Unresponsive server
+3: Unknow page

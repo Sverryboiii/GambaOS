@@ -20,6 +20,9 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
 
     parsed_code = parser.parse(code)
 
+    post = []
+    may_post = False
+
     sheet = {}
     for token in parsed_code:
         text = token["text"]
@@ -31,6 +34,9 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
 
         if "h" in names:
             name = "h"
+        if "POST" in names:
+            post.append(text)
+            may_post = True
 
         if "b" in names:
             name += "b"
@@ -46,7 +52,7 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
                 directory = tag.get("dir", "")
                 full_path = os.path.join(path, directory)
                 if not directory or not os.path.exists(full_path):
-                    raise ValueError("No path given or path doesn't exist!")
+                    raise ValueError(f"No path given or path doesn't exist! Path: {full_path}")
                 with open(full_path, "r") as f:
                     code = f.read()
                 sheet = gss_runtime.execute(code, window)
@@ -59,3 +65,7 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
             hyperlink=hyperlink,
             newline="nl" in names
         )
+
+    if may_post:
+        return post
+    return []

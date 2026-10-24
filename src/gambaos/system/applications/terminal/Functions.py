@@ -28,11 +28,8 @@ def execute(operation: str):
 
     split_operation = operation.split(" ")
     if running_program:
-        program_storage.input = operation
-        text_box.add_text(
-            f"{operation}",
-            "tiny", color=(255, 255, 255)
-        )
+        storage.storage.input = operation
+        return
     elif split_operation[0] in commands:
         try:
             if len(split_operation) > 1:
@@ -102,6 +99,7 @@ def run_pyrolang_script(file: str):
     storage.storage = storage.Storage(text_box)
     program_storage = storage.Storage
     exe.execute(resource_path(f"user/{file}"))
+    print("Finished!")
     input_bar.function = execute
     running_program = False
 

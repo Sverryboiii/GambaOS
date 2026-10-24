@@ -6,6 +6,7 @@ window: spk.Window
 current_directory = "user"
 
 def change_directory(directory: str):
+    print("Checking directory.")
 
     if "." in directory and not ".." in directory:
         open_file(directory)
@@ -20,6 +21,7 @@ def change_directory(directory: str):
     reset_file_buttons()
 
 def open_file(file: str) -> None:
+    print("Opening file")
     global current_directory
 
     if not file.endswith((".pr", ".txt")):
@@ -72,6 +74,7 @@ def reset_file_buttons():
                 directory=file
             )
         )
+        window.components[-1].hitbox_offset = (window.rect.x, window.rect.y)
 
 def get_files(directory: str) -> list[str] | list[bytes]:
     return os.listdir(FileManager.resource_path(directory))
