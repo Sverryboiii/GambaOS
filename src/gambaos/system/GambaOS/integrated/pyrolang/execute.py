@@ -1,9 +1,9 @@
-from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
+from src.gambaos.system.GambaOS.integrated.pyrolang import lexer, storage
 
-
-def execute(code: str) -> None:
-    print("Executing:", code)
-    lexer.main_code = code
-    lexer.tokenize(code)
+def execute(path: str) -> None:
+    print("Executing:", path)
+    storage.storage.file = "/".join(path.split("/")[:-1])
+    lexer.main_code = path
+    lexer.tokenize(path)
 
 # execute("main.pr")

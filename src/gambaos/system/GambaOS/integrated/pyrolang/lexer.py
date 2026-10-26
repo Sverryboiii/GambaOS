@@ -1,7 +1,7 @@
-from src.gambaos.system.GambaOS.integrated.pyrolang import parser
+from src.gambaos.system.GambaOS.integrated.pyrolang import parser, storage
 import typing, sverpykit as spk
 
-main_code = None
+main_code: str
 
 def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
     with open(file, "r") as f:
@@ -12,6 +12,8 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
 
     for count, line in enumerate(lines):
         spk.run_frame()
+        if storage.storage.terminate:
+            break
         line: str = line.strip()
         if line == "":
             continue
@@ -56,7 +58,7 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
         # Set a variable.
         elif base_command == "SET":
             token["action"] = " ".join(split_line[1:])
-        # Run 1 function if the expression is true.
+        # Run 1 function if the expression is true and 1 other function if the expression is false.
         elif base_command == "if":
             token["base_command"] = "IF"
             token["expression"] = split_line[1]
@@ -79,5 +81,8 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
             token["action"] = base_command
             token["parameters"] = " ".join(split_line[1:])
 
-        parser.parse(token)
+        try:
+            parser.parse(token)
+        except Exception as e:
+            print(f"Error: {e} at line {count}!")
     return None

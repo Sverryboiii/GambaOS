@@ -44,7 +44,6 @@ def get_widgets():
 def load_index(server: str):
 
     address = "/".join(server.split("/")[:-1]) if "code='" in server else server
-    print(server, address)
     if not os.path.exists(address):
         text_box.change_text(f"Error: Page '{address.split('/')[-1]}' not found!")
         return
@@ -57,7 +56,7 @@ def load_index(server: str):
         pyro_storage.storage.customs["window"] = window
         pyro_storage.storage.customs["link_executor"] = load_page
         pyro_storage.storage.customs["address"] = "/".join(address.split("/")[:address.split("/").index("GambaOS-Sverryboiii")+4])
-        print("/".join(address.split("/")[:address.index("GambaOS-Sverryboiii")+1]))
+        pyro_storage.storage.variables["global_code"] = server.split("/")[-1].split("'")[1]
         run_pyro.execute(FileManager.project_level_path(module))
         return
 
@@ -70,6 +69,7 @@ def load_page(web_address: str):
     window.components = [component for component in window.components if not isinstance(component, spk.Button)]
     window.color = WebConfig.window_color
     text_box.text_surfs = []
+    text_box.searchbars = []
     text_box.text = ""
     if web_address == "":
         window.components = base_components
@@ -107,7 +107,8 @@ base_components = [
         ),
         display=Config.screen,
         function=load_page,
-        color=(100, 100, 100)
+        color=(100, 100, 100),
+        preset="Search"
     ),
     text_box,
     *widgets

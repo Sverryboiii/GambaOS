@@ -8,3 +8,6 @@ time ("%Y/%M/%D"!) -> t2
 out ("Humanly readable: "!;t2)
 time ("%f"!) -> t3
 out ("All data needed: "!;t3)
+
+out ("test"!)
+out (") -> "!) -> x

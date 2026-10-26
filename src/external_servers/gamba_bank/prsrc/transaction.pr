@@ -1,3 +1,16 @@
 GETF modules/webpr.pr
+GETF modules/io.pr
+GETF modules/files.pr
 
-gml ("gamba_bank/login.gml"!)
+func success [] {
+    gml ("gamba_bank/transaction_success.gml"!)
+}
+
+// Get user details
+gml ("gamba_bank/login_name.gml"!) -> name
+gml ("gamba_bank/login_password.gml"!) -> password
+
+// Read database
+read ("data/currency.json"!) -> data
+json_upack (data,name) -> data
+write (data)

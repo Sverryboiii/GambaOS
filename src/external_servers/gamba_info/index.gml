@@ -4,4 +4,4 @@
 <l><i><b>Gamba OS is NOT an os!</b></i><nl>
 <l>Gamba OS is a virtual environment, which is built to a game.<nl>
 <l>Get started with the following website:<nl>
-<l><link>gww.gamba_market.gam</link><nl>1
+<l><link>gamba_market</link><nl>

@@ -1,5 +1,6 @@
 from src.gambaos.system.GambaOS.integrated.gml import parser
 from src.gambaos.system.GambaOS.integrated.gss import runtime as gss_runtime
+from typing import Callable
 import sverpykit as spk, os
 
 fonts = {
@@ -16,14 +17,23 @@ fonts = {
 for font_name, font in fonts.items():
     spk.set_font(f"GPP_{font_name}", *font)
 
-def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, path: str):
+
+post = []
+may_post = False
+def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, path: str, variables: dict | None = None):
+    if not variables:
+        variables = {}
+    global post, may_post
 
     parsed_code = parser.parse(code)
 
-    post = []
-    may_post = False
-
     sheet = {}
+
+    def _post(value):
+        global post, may_post
+        post = value
+        may_post = True
+
     for token in parsed_code:
         text = token["text"]
         tags = token["tags"]
@@ -46,6 +56,11 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
         hyperlink = None
         if "link" in names:
             hyperlink = (link_executor, [text])
+        if "var" in names:
+            text = variables.get(text, "None")
+        search_bar = None
+        if "input" in names:
+            search_bar: tuple[Callable, str] = (_post, text)
 
         for tag in tags:
             if tag["name"] == "style":
@@ -63,9 +78,11 @@ def execute(code, text_box: spk.TextBlock, window: spk.Window, link_executor, pa
             f"GPP_{name}",
             text_color if text_color else (255, 255, 255),
             hyperlink=hyperlink,
-            newline="nl" in names
+            newline="nl" in names,
+            input_=(True, search_bar[0], [], search_bar[1]) if "input" in names else (False, lambda : None, [], "")
         )
 
-    if may_post:
-        return post
-    return []
+    while not may_post:
+        spk.run_frame()
+    may_post = False
+    return post

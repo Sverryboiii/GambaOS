@@ -8,3 +8,7 @@ GETF: Get and run an external file.<br>
 [GETF {path/to/external/file.pr}] (modules/ gets a builtin module)<br>
 SET: Set a variable.<br>
 [SET {variable name} {value}]<br>
+if: An run 1 line of code if the expression is true.<br>
+[if [{expression}] _{evaluation}_] (Important: This may only be in 1 line!)<br>
+func: Create a function.<br>
+[func {name} [{parameters split by ';'}] {] (Close on another line using '}')

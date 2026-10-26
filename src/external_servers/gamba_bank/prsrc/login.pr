@@ -1,0 +1,69 @@
+GETF modules/webpr.pr
+GETF modules/files.pr
+GETF modules/io.pr
+GETF modules/sys.pr
+GET to_s
+GET type
+
+func successful_login [] {
+    SET login_success "1"+
+}
+
+func login [] {
+
+    // Unpack stored data:
+    json_upack (currency_data;name) -> user_login
+    json_upack (user_login;"password"!) -> user_password
+    to_s (user_password) -> user_password
+
+    // Check if the password is correct:
+    if [user_password|password] _gml ("gamba_bank/error.gml"!;"error"!;"Login failed: Password is incorrect!"!)_ _successful_login ()_
+
+}
+
+func successful_signup [] {
+
+    // Pack user data.
+    json_pack ("{}"!;"password"!;password;"false"B) -> user_data
+    json_pack (user_data;"money"!;"0"+) -> user_data
+    time () -> t
+    json_pack (user_data;"register_time"!;t) -> user_data
+
+    // Pack user data into the main database and write.
+    json_pack (currency_data;name;user_data) -> packed_data
+    write ("data/currency.json"!;packed_data)
+
+    SET login_success "1"+
+}
+
+func signup [] {
+
+    // Confirm password logic.
+    gml ("gamba_bank/confirm_password.gml"!) -> confirmed_password
+    if [password|confirmed_password] _gml ("gamba_bank/error.gml"!;"error"!;"Passwords do not match"!)_ _successful_signup ()_
+}
+
+// Get username and password
+gml ("gamba_bank/login_name.gml"!) -> name
+gml ("gamba_bank/login_password.gml"!) -> password
+
+// Read and unpack user data
+read ("data/currency.json"!) -> currency_data
+json_upack (currency_data;name) -> user_data
+
+// Set ground values.
+SET login_success "0"+
+
+// Login if username is already registered, else sign up.
+out (user_data)
+if [user_data|"false"B] _login ()_ _signup ()_
+
+// Exit script if login isn't a success
+func login_exit [] {
+    gml ("gamba_bank/index.gml"!)
+    exit ()
+}
+if [login_success|"1"+] _login_exit ()_ _pass ()_
+
+// Go to user's page.
+gml ("gamba_bank/logged_in_index.gml"!;"name"!;name)

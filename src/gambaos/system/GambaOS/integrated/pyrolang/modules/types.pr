@@ -1,0 +1,3 @@
+GET to_i
+GET to_s
+GET type

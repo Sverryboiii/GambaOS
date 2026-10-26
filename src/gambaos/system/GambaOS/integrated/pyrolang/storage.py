@@ -9,7 +9,7 @@ class Boolean:
 
     @staticmethod
     def is_bool(value: str):
-        return value.startswith('"') and value.endswith('"=')
+        return value.startswith('"') and value.endswith('"B')
 
     def convert(self):
         boolean = self.data[1:].split('"')[0]
@@ -143,7 +143,7 @@ class Function:
     def run(self, *arguments):
         from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
         if len(self.parameters) != len(arguments):
-            raise TypeError(f"This function accepts '{len(self.parameters)}', but you gave '{len(arguments)}'.")
+            raise TypeError(f"This function accepts '{len(self.parameters)}' argument(s), but you gave '{len(arguments)}'.")
         for count, parameter in enumerate(self.parameters):
             self.scope[parameter] = arguments[count]
         val = lexer.tokenize(self.file, self.start, function=self)
@@ -153,12 +153,17 @@ class Function:
 class Storage:
     def __init__(self, text_block):
         self.variables = {}
-        self.functions = {}
+        self.functions = {
+            "pass": lambda : None
+        }
 
         self.customs = {}
+        self.file = ""
 
         self.text_block: spk.TextBlock = text_block
         self.input = None
+
+        self.terminate = False
 
     def add_variable(self, var, val):
         self.variables[var] = val
