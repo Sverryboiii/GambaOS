@@ -1,0 +1,3 @@
+*.gml linguist-language=GambaMarkupLanguage
+*.pr linguist-language=PyroLang
+*.gss linguist-language=GambaStyleSheets
