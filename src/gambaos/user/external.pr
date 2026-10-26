@@ -1,3 +1,4 @@
+GET up_g
 out ("Hello from external.pr"!)
 
 func hi [] {
@@ -5,3 +6,4 @@ func hi [] {
 }
 
 SET x "1"+
+up_g ("y"!;"1"+)

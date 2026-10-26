@@ -147,6 +147,7 @@ class Function:
         for count, parameter in enumerate(self.parameters):
             self.scope[parameter] = arguments[count]
         val = lexer.tokenize(self.file, self.start, function=self)
+        storage.active_file = storage.file
         return val
 
 

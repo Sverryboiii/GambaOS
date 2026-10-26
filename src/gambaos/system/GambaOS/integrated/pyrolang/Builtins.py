@@ -83,6 +83,11 @@ def _in(*values):
 def _exit():
     storage.storage.terminate = True
 
+def _update_globals(var, val):
+    print(var.data, val.data)
+    storage.storage.variables[(str(var.data))] = val
+    print(storage.storage.variables)
+
 def _time(format_=storage.String("%t", convert=False)):
     """
     :param format_:
@@ -201,6 +206,7 @@ class Builtins:
             "out": _out,
             "in": _in,
             "exit": _exit,
+            "up_g": _update_globals,
             "time": _time,
             "gml": _gml,
             "read": _read,
