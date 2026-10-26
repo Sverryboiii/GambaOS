@@ -1,5 +1,6 @@
 GETF modules/io.pr
 GETF modules/sys.pr
+GETF external.pr
 GET add
 
 time () -> t
@@ -11,3 +12,4 @@ out ("All data needed: "!;t3)
 
 out ("test"!)
 out (") -> "!) -> x
+hi ()

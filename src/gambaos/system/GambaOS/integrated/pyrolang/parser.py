@@ -16,8 +16,14 @@ def parse_value(value, function: storage.Function):
         return storage.Boolean(value)
     if function and value in function.scope.keys():
         return function.scope[value]
-    if value in storage.storage.variables.keys():
-        return storage.storage.variables[value]
+    if value in (
+            storage.storage.variables.keys() if storage.storage.file == storage.storage.active_file
+        else storage.storage.scopes[storage.storage.active_file].keys()
+    ):
+        if storage.storage.file == storage.storage.active_file:
+            return storage.storage.variables[value]
+        else:
+            return storage.storage.scopes[storage.storage.active_file][value]
     raise ValueError(f"Unrecognized data-type '{value[-1]}' in {value}.")
 
 def parse_expression(expression: str, function: storage.Function) -> bool:
@@ -128,7 +134,6 @@ def parse(token: dict):
                 if not start_eval:
                     split_evaluations.append(evaluations[:c+1])
                     split_evaluations.append(evaluations[c+1:])
-                    print(split_evaluations)
                     break
             if char == '"':
                 if in_value:

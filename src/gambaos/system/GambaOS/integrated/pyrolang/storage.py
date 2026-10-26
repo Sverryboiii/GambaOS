@@ -1,5 +1,5 @@
 from src.gambaos.system.GambaOS.FileManager import resource_path
-import sverpykit as spk
+import sverpykit as spk, os
 
 class Boolean:
     def __init__(self, boolean: str | bool):
@@ -156,9 +156,11 @@ class Storage:
         self.functions = {
             "pass": lambda : None
         }
+        self.scopes = {}
 
         self.customs = {}
         self.file = ""
+        self.active_file = ""
 
         self.text_block: spk.TextBlock = text_block
         self.input = None
@@ -166,13 +168,24 @@ class Storage:
         self.terminate = False
 
     def add_variable(self, var, val):
-        self.variables[var] = val
+        if self.file == self.active_file:
+            self.variables[var] = val
+        else:
+            self.scopes[self.active_file][var] = val
 
     def add_pr_function(self, name, start, file, parameters):
         self.functions[name] = Function(start, file, parameters)
 
-    @ staticmethod
-    def load_file(directory: str):
+    def load_file(self, directory: str):
         from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
-        lexer.tokenize(resource_path(f"system/GambaOS/integrated/pyrolang/{directory}"))
+        if directory.startswith("modules/"):
+            path = resource_path(f"system/GambaOS/integrated/pyrolang/{directory}")
+        else:
+            path = os.path.join(
+                self.file,
+                directory
+            )
+        self.scopes[path] = {}
+        lexer.tokenize(path)
+        self.active_file = self.file
 storage: Storage

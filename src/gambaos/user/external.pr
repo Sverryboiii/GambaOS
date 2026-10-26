@@ -1,0 +1,7 @@
+out ("Hello from external.pr"!)
+
+func hi [] {
+    out ("Hello"!)
+}
+
+SET x "1"+

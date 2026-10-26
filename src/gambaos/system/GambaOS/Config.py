@@ -17,3 +17,5 @@ font = spk.set_font()
 
 tick_functions: list[Callable] = []
 frame_functions: list[Callable] = []
+
+DEBUG_MODE = True

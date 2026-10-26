@@ -1,9 +1,11 @@
 from src.gambaos.system.GambaOS.integrated.pyrolang import parser, storage
+from src.gambaos.system.GambaOS import Config
 import typing, sverpykit as spk
 
 main_code: str
 
 def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
+    storage.storage.active_file = file
     with open(file, "r") as f:
         code = f.read()
 
@@ -81,8 +83,11 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
             token["action"] = base_command
             token["parameters"] = " ".join(split_line[1:])
 
-        try:
+        if Config.DEBUG_MODE:
             parser.parse(token)
-        except Exception as e:
-            print(f"Error: {e} at line {count}!")
+        else:
+            try:
+                parser.parse(token)
+            except Exception as e:
+                print(f"Error: {e} at line {count}!")
     return None
