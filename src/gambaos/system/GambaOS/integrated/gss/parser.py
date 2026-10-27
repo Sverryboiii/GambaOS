@@ -20,7 +20,7 @@ def parse(code):
     code = "".join(code.strip().split("\n"))
 
     if not code.startswith("{") and code.endswith("}"):
-        raise SyntaxError("GSS files must be withing curly brackets '{}'.")
+        raise SyntaxError("GSS files must be within curly brackets '{}'.")
 
     code = code[1:-1]
 
