@@ -5,16 +5,16 @@ appdata_path = str(os.getenv("APPDATA")) if os.name == "nt"\
 if os.path.exists(os.path.join(appdata_path, "temp/tmp.json")):
     with open(os.path.join(appdata_path, "temp/tmp.json"), "r") as f:
         data = json.load(f)
-    appdata_path = os.path.join(appdata_path, f"instances/{data['instance']}")
+    appdata_path = os.path.join(appdata_path, f"GambaOS-Sverryboiii/instances/{data['instance']}")
 
 def resource_path(relative_path: str) -> str:
     return os.path.join(
-        appdata_path, f"GambaOS-Sverryboiii/src/gambaos/{relative_path}"
+        appdata_path, f"src/gambaos/{relative_path}"
     )
 
 def project_level_path(relative_path: str) -> str:
     return os.path.join(
-        appdata_path, f"GambaOS-Sverryboiii/src/{relative_path}"
+        appdata_path, f"src/{relative_path}"
     )
 
 def json_read(path: str) -> list | dict:
