@@ -2,6 +2,10 @@ import os, json
 
 appdata_path = str(os.getenv("APPDATA")) if os.name == "nt"\
         else os.path.join(os.path.expanduser("~"), ".config")
+if os.path.exists(os.path.join(appdata_path, "temp/tmp.json")):
+    with open(os.path.join(appdata_path, "temp/tmp.json"), "r") as f:
+        data = json.load(f)
+    appdata_path = os.path.join(appdata_path, f"instances/{data['instance']}")
 
 def resource_path(relative_path: str) -> str:
     return os.path.join(
