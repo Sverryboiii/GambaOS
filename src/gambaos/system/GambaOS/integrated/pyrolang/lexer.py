@@ -65,6 +65,11 @@ def tokenize(file, start: int = 0, function=False) -> None | typing.Any:
             token["base_command"] = "IF"
             token["expression"] = split_line[1]
             token["evaluation"] = " ".join(split_line[2:])
+        # Run 1 function while the expression is true.
+        elif base_command == "while":
+            token["base_command"] = "WHILE"
+            token["expression"] = split_line[1]
+            token["evaluation"] = split_line[2:]
         # Create a function.
         elif base_command == "func":
             if not split_line[-1].endswith("{"):

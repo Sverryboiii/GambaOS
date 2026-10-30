@@ -16,7 +16,6 @@ def parse_value(value, function: storage.Function):
         return storage.Boolean(value)
     if function and value in function.scope.keys():
         return function.scope[value]
-    print(storage.storage.file, storage.storage.active_file)
     if value in (
             storage.storage.variables.keys() if storage.storage.file == storage.storage.active_file
         else storage.storage.scopes[storage.storage.active_file].keys()
@@ -25,7 +24,6 @@ def parse_value(value, function: storage.Function):
             return storage.storage.variables[value]
         else:
             return storage.storage.scopes[storage.storage.active_file][value]
-    print(storage.storage.variables, value)
     raise ValueError(f"Unrecognized data-type '{value[-1]}' in {value}.")
 
 def parse_expression(expression: str, function: storage.Function) -> bool:
@@ -157,6 +155,8 @@ def parse(token: dict):
         func = storage.storage.functions[name]
         save = payload["save"]
         values = payload["values"]
+    elif token["base_command"] == "WHILE":
+        pass
     elif token["base_command"] == "FUNC": # Creation
         func = storage.storage.add_pr_function
         parameters = token["parameters"]

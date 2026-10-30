@@ -42,6 +42,7 @@ def start_gamba_os():
     sys.path.insert(0, config)
     spec = importlib.util.spec_from_file_location("appdata_GambaOS", os.path.join(config, "src/gambaos/system/GambaOS/main.py"))
     gamba_os = importlib.util.module_from_spec(spec)
+    print(gamba_os)
     sys.modules["gamba_main"] = gamba_os
     spec.loader.exec_module(gamba_os)
 

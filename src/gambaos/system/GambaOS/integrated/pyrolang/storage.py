@@ -153,6 +153,8 @@ class Function:
 
 class Storage:
     def __init__(self, text_block):
+        from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
+        self.lexer = lexer
         self.variables = {}
         self.functions = {
             "pass": lambda : None
@@ -177,8 +179,10 @@ class Storage:
     def add_pr_function(self, name, start, file, parameters):
         self.functions[name] = Function(start, file, parameters)
 
+    def while_loop(self, expression, function):
+        pass
+
     def load_file(self, directory: str):
-        from src.gambaos.system.GambaOS.integrated.pyrolang import lexer
         if directory.startswith("modules/"):
             path = resource_path(f"system/GambaOS/integrated/pyrolang/{directory}")
         else:
@@ -187,6 +191,6 @@ class Storage:
                 directory
             )
         self.scopes[path] = {}
-        lexer.tokenize(path)
+        self.lexer.tokenize(path)
         self.active_file = self.file
 storage: Storage
