@@ -4,12 +4,12 @@ appdata_path = os.path.join(
     str(os.getenv("APPDATA")) if os.name == "nt"\
         else os.path.join(os.path.expanduser("~"), ".config"),
     "GambaOS-Sverryboiii"
-)
+).replace("\\", "/")
 tmp = os.path.join(appdata_path, "temp/tmp.json")
 if os.path.exists(tmp):
     with open(tmp, "r") as f:
         data = json.load(f)
-    appdata_path = os.path.join(appdata_path, f"instances/{data['instance']}")
+    appdata_path = os.path.join(appdata_path, f"instances/{data['instance']}").replace("\\", "/")
 
 def resource_path(relative_path: str) -> str:
     return os.path.join(
