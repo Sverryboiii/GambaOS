@@ -14,12 +14,12 @@ if os.path.exists(tmp):
 def resource_path(relative_path: str) -> str:
     return os.path.join(
         appdata_path, f"src/gambaos/{relative_path}"
-    )
+    ).replace("\\", "/")
 
 def project_level_path(relative_path: str) -> str:
     return os.path.join(
         appdata_path, f"src/{relative_path}"
-    )
+    ).replace("\\", "/")
 
 def json_read(path: str) -> list | dict:
     with open(path, "r") as f:
