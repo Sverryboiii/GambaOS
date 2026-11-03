@@ -4,8 +4,8 @@ appdata_path = os.path.join(
     str(os.getenv("APPDATA")) if os.name == "nt"\
         else os.path.join(os.path.expanduser("~"), ".config"),
     "GambaOS-Sverryboiii"
-).replace("\\", "/")
-tmp = os.path.join(appdata_path, "temp/tmp.json")
+)
+tmp = os.path.join(appdata_path, "temp/tmp.json").replace("\\", "/")
 if os.path.exists(tmp):
     with open(tmp, "r") as f:
         data = json.load(f)
