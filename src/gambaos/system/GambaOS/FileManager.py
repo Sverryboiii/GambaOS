@@ -1,7 +1,7 @@
 import os, json
 
 appdata_path = os.path.join(
-    str(os.getenv("APPDATA")) if os.name == "nt"\
+    str(os.getenv("LOCALAPPDATA")) if os.name == "nt"\
         else os.path.join(os.path.expanduser("~"), ".config"),
     "GambaOS-Sverryboiii"
 )
