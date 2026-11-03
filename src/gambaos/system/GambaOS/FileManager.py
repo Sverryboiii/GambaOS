@@ -6,10 +6,15 @@ appdata_path = os.path.join(
     "GambaOS-Sverryboiii"
 )
 tmp = os.path.join(appdata_path, "temp/tmp.json").replace("\\", "/")
+print(tmp)
 if os.path.exists(tmp):
     with open(tmp, "r") as f:
         data = json.load(f)
-    appdata_path = os.path.join(appdata_path, f"instances/{data['instance']}").replace("\\", "/")
+    appdata_path = os.path.join(appdata_path, f"instances/{data['instance'].replace("\\", "/").split("/")[-1]}").replace("\\", "/")
+    print(data)
+else:
+    print("[ERROR] >> Temp File is not found!")
+    raise FileNotFoundError ("Temp File is not found!")
 
 def resource_path(relative_path: str) -> str:
     return os.path.join(
