@@ -3,7 +3,7 @@ import pygame, sverpykit as spk, os, importlib
 from typing import Callable
 from datetime import datetime
 
-logging_file = FileManager.project_level_path("../logs/RuntimeLogs.log")
+logging_file = FileManager.project_level_path("../../../logs/RuntimeLogs.log")
 
 def quit_gambaos():
     log_message("INFO", "Quitting GambaOS!")
