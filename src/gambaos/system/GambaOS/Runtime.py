@@ -7,7 +7,7 @@ logging_file = FileManager.project_level_path("../../../logs/RuntimeLogs.log")
 
 def quit_gambaos():
     log_message("INFO", "Quitting GambaOS!")
-    spk.quit_game()
+    pygame.quit()
 
 def launch_application(application_path: str, run_function: str | None = None, *function_args):
     module = importlib.import_module(f"src/gambaos/system/applications/{application_path}/main".replace("/", "."))
