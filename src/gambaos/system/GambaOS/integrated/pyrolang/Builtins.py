@@ -6,45 +6,46 @@ import sverpykit as spk, time, os, json
 from datetime import datetime
 
 # All Built-in methods that are used for PyroLang.
+
+# Math functions
 def _add(*values):
     val = storage.Float(values[0])
     for v in values[1:]: val += v
     return val.data
-
 def _subtract(*values):
     val = storage.Float(values[0])
     for v in values[1:]: val -= v
     return val.data
-
 def _multiply(*values):
     val = storage.Float(values[0])
     for v in values[1:]: val *= v
     return val.data
-
 def _divide(*values):
     val = storage.Float(values[0])
     for v in values[1:]: val /= v
     return val.data
-
 def _equals(a, b):
     return a == b
-
 def _avg(*values):
     return _add(*values) / len(values)
-
 def _max(*values):
     highest = values[0]
     for v in values:
         if v.data > highest.data:
             highest = v
     return highest
-
 def _min(*values):
     lowest = values[0]
     for v in values:
         if v.data < lowest.data:
             lowest = v
     return lowest
+
+def _split(value, split_part, index):
+    try:
+        return storage.String(value.data.split(split_part)[index], convert=False)
+    except IndexError:
+        return storage.Boolean(False)
 
 def is_printable_value(value):
     return isinstance(value, storage.String)\
@@ -195,6 +196,7 @@ def _type(val):
 class Builtins:
     def __init__(self):
         self.methods = {
+            # Math
             "eq": _equals,
             "avg": _avg,
             "max": _max,
@@ -203,18 +205,25 @@ class Builtins:
             "sub": _subtract,
             "mult": _multiply,
             "div": _divide,
+            # IO
             "out": _out,
             "in": _in,
+            # System Level
             "exit": _exit,
             "up_g": _update_globals,
             "time": _time,
+            # Other Languages
             "gml": _gml,
+            # Files
             "read": _read,
             "write": _write,
             "json_pack": _json_pack,
             "json_upack": _json_upack,
+            # Data Types
             "to_s": _to_s,
-            "type": _type
+            "type": _type,
+            # String Manipulation
+            "split": _split
         }
 
     def load_builtin(self, name):
