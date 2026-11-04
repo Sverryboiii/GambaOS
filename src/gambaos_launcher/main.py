@@ -45,6 +45,7 @@ def open_instance(instance):
     sys.modules["gamba_main"] = gamba_os
     print("Starting logs from here:")
     spec.loader.exec_module(gamba_os)
+    sys.path.remove(instance)
 
 def download_gambaos_version(version: str = "vTEST-0.1.1", dest_directory: str = ""):
     # https://github.com/sverryboiii/gambaos/archive/refs/tags/vTEST-0.1.1.zip
@@ -121,6 +122,7 @@ def main():
 if __name__ == "__main__":
     print("\n ==== Welcome To GambaOS Launcher! ==== \n")
     while True:
+        pygame.init()
         if debug:
             main()
             continue

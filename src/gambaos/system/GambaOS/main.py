@@ -1,7 +1,7 @@
 print("Starting GambaOS!")
 import pygame, sverpykit as spk
-from src.gambaos.system.GambaOS import Ui, Config
 pygame.init()
+from src.gambaos.system.GambaOS import Ui, Config
 pygame.display.set_caption("GambaOS")
 
 spk.set_font()
@@ -27,5 +27,6 @@ def main():
     while Config.running:
         spk.run_frame()
     pygame.quit()
+    print("Quiting GambaOS.")
 
 main()
