@@ -1,0 +1,31 @@
+func login [currency_data;name;password] {
+
+    // Unpack stored data:
+    json_upack (currency_data;name) -> user_login
+    json_upack (user_login;"password"!) -> user_password
+    to_s (user_password) -> user_password
+
+    // Check if the password is correct:
+    if [user_password|password] _gml ("gamba_bank/error.gml"!;"error"!;"Login failed: Password is incorrect!"!)_ _pass ()_
+
+}
+
+func successful_signup [currency_data;name;password] {
+
+    // Pack user data.
+    json_pack ("{}"!;"password"!;password;"false"B) -> user_data
+    json_pack (user_data;"money"!;"0"+) -> user_data
+    time () -> t
+    json_pack (user_data;"register_time"!;t) -> user_data
+
+    // Pack user data into the main database and write.
+    json_pack (currency_data;name;user_data) -> packed_data
+    write ("data/currency.json"!;packed_data)
+}
+
+func signup [currency_data;name;password] {
+
+    // Confirm password logic.
+    gml ("gamba_bank/confirm_password.gml"!) -> confirmed_password
+    if [password|confirmed_password] _gml ("gamba_bank/error.gml"!;"error"!;"Passwords do not match"!)_ _successful_signup (currency_data;name;password)_
+}
