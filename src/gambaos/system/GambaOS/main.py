@@ -1,6 +1,7 @@
 print("Starting GambaOS!")
 import pygame, sverpykit as spk
 from src.gambaos.system.GambaOS import Ui, Config
+pygame.init()
 pygame.display.set_caption("GambaOS")
 
 spk.set_font()
@@ -17,8 +18,15 @@ def frame():
 def tick():
     [method() for method in Config.tick_functions]
 
-spk.max_rate(60, 60)
+def main():
+    spk.max_rate(60, 60)
 
-spk.set_frame_method(frame)
-spk.set_tick_method(tick)
-spk.start()
+    spk.set_frame_method(frame)
+    spk.set_tick_method(tick)
+
+    while Config.running:
+        spk.run_frame()
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
