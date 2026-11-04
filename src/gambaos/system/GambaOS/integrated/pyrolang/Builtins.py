@@ -43,7 +43,7 @@ def _min(*values):
 
 def _split(value, split_part, index):
     try:
-        return storage.String(value.data.split(split_part)[index], convert=False)
+        return storage.String(value.data.split(split_part)[index.data], convert=False)
     except IndexError:
         return storage.Boolean(False)
 
