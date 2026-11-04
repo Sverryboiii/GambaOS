@@ -56,7 +56,7 @@ def load_index(server: str):
         pyro_storage.storage.customs["window"] = window
         pyro_storage.storage.customs["link_executor"] = load_page
         pyro_storage.storage.customs["address"] = "/".join(address.split("/")[:address.split("/").index("GambaOS-Sverryboiii")+4])
-        pyro_storage.storage.variables["global_code"] = server.split("/")[-1].split("'")[1]
+        pyro_storage.storage.variables["url_code"] = server.split("/")[-1].split("'")[1]
         run_pyro.execute(FileManager.project_level_path(module))
         return
 
