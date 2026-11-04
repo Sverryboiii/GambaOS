@@ -28,5 +28,4 @@ def main():
         spk.run_frame()
     pygame.quit()
 
-if __name__ == "__main__":
-    main()
+main()
