@@ -1,1 +1,25 @@
 GETF modules/files.pr
+GETF modules/webpr.pr
+
+func singup [] {
+    gml ("inkcloud/login.gml"!;"Confirm Password"!) -> confirmed_password
+
+    if [password|confirmed_password] _gml ("inkcloud/error.gml"!;"Login failed: Passwords must be identical!"!)_ _pass ()_
+
+    json_pack ("{}"!;"password"!;password) -> packed_data
+    json_pack (users_data;username;packed_data) -> packed_data
+    write ("data/users.json"!;packed_data)
+}
+
+func login [] {
+    gml ("inkcloud/login.gml"!;"Username"!) -> username
+    gml ("inkcloud/login.gml"!;"Password"!) -> password
+
+    read ("data/users.json"!) -> users_data
+
+    json_upack (users_data;username) -> user_data
+
+    if [user_data="false"B] _singup ()_ _json_upack (user_data;"password"!) -> true_password_
+
+    if [password=true_password] _pass ()_ _gml ("inkcloud/error.gml"!;"Login failed: Incorrect password!"!)
+}

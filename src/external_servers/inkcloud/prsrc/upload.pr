@@ -1,0 +1,10 @@
+GETF login.pr
+GETF modules/webpr.pr
+GETF modules/files.pre
+
+login ()
+gml ("inkcloud/directory.gml"!) -> directory
+dir ("user"!) -> user_dir
+add_str (user_dir;"/"!;directory) -> full_path
+
+read (full_path) ->
