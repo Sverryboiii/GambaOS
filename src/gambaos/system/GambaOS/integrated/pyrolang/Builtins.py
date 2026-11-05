@@ -5,6 +5,12 @@ from src.gambaos.system.applications.web_explorer import Config as WebConfig
 import sverpykit as spk, time, os, json
 from datetime import datetime
 
+# Global variables
+base_directories: dict[str, str] = {
+    "name": os.path.join(FileManager.appdata_path, "src/gambaos/user")
+}
+
+
 # All Built-in methods that are used for PyroLang.
 
 # Math functions
@@ -46,6 +52,8 @@ def _split(value, split_part, index):
         return storage.String(value.data.split(split_part)[index.data], convert=False)
     except IndexError:
         return storage.Boolean(False)
+def _add_str(*strings):
+    return "".join(strings)
 
 def is_printable_value(value):
     return isinstance(value, storage.String)\
@@ -152,6 +160,11 @@ def _gml(path, *variables):
         new_vars
     )), convert=False)
 
+def _dir(name):
+    return storage.String(
+        base_directories[name.data], convert=False
+    )
+
 def _read(file):
     full_path = os.path.join(storage.storage.file, file.data)
     with open(full_path, "r") as f:
@@ -215,6 +228,7 @@ class Builtins:
             # Other Languages
             "gml": _gml,
             # Files
+            "dir": _dir,
             "read": _read,
             "write": _write,
             "json_pack": _json_pack,
@@ -223,7 +237,8 @@ class Builtins:
             "to_s": _to_s,
             "type": _type,
             # String Manipulation
-            "split": _split
+            "split": _split,
+            "add_str": _add_str
         }
 
     def load_builtin(self, name):
